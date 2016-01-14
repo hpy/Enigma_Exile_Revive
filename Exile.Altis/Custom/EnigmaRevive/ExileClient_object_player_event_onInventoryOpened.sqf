@@ -32,7 +32,7 @@ else
 		{
 			if ((_container getVariable ["ExileIsLocked", 1] isEqualTo -1) || (_container getVariable["antidupe", 1]) isEqualTo -1) then  //added revive dupe test -- happdayz
 			{
-			hint "antidupe initiated";
+			//hint "antidupe initiated";
 				_cancelEvent = true;
 			}
 			else 
