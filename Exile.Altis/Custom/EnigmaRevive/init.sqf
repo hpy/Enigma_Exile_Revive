@@ -87,6 +87,7 @@ player setVariable["antidupe", 1, true];
   	_requestingPlayer = _packet select 0;
 	_revivername = _packet select 1;
   	systemChat Format ["%1 bungled your revive and killed you!",_revivername];
+  		player setVariable["antidupe", 1, true]; //remove the antidupe from the revived player!
 	[] call ExileClient_gui_escape_respawn; //force kill player
 };
 
