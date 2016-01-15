@@ -6,6 +6,7 @@ changelog
 
 13/01/16 -- prevent duping of gear by revived player.
 14/01/16 -- prevent accessing gear on player being revived (stops duping).
+15/01/16 -- hotfix to enable access to corpse inventory after a failed revive.
 
 
 
