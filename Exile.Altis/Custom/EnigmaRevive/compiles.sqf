@@ -1,6 +1,7 @@
 /*
 Enigma Exile Revive Compiles
-[_ZEN_] Enigma (Happydayz)
+[_ZEN_] Happydayz
+© 2016 Enigma Team
 */
 
 if (!hasInterface && isServer) exitWith {

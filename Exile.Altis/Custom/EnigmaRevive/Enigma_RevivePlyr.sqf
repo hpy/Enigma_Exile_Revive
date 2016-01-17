@@ -1,6 +1,7 @@
 /*
 Enigma_RevivePlyr.sqf
-[_ZEN_] Enigma (Happydayz)
+[_ZEN_] Happydayz
+© 2016 Enigma Team
 */
 
 private["_defibangle","_defibpos","_bodypos","_action","_timer","_Anims","_target","_targetname","_bodypos1","_bodypos2","_bodypos3","_updatestats","_healPlace","_target","_animstate","_primaryw","_posh","_posi","_dy","_dx","_dir"];
