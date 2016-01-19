@@ -45,6 +45,8 @@ ExileClientBleedOutHeartbeatPlaying = false;
 ExileClientBleedOutCountDownDuration = _respawnDelay;
 ExileClientBleedOutCountDownEnd = time + _respawnDelay;
 
+player setVariable ["BleedoutCountDownEnd", ExileClientBleedOutCountDownEnd, true]; 
+//added to prevent player bodies being revived after they have died! Frankenstein!!!!
 
 _layer = "BIS_fnc_respawnCounter" call bis_fnc_rscLayer;
 _layer cutText ["", "plain"];

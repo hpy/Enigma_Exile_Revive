@@ -83,9 +83,18 @@ if (_primaryw == "") then {
 };
 
 		if (_target getVariable["REVIVE", true]) then { 
+
+_targetsbleedoutcountdown = _target getVariable "BleedoutCountDownEnd";
+
+_secondsRemaining = _targetsbleedoutcountdown - time; 
+if (_secondsRemaining >= 17) then
+{
 		_target setVariable["antidupe", -1, true]; 
        ENIGMA_revivePlayer = [_target,player,1];
        publicVariableServer "ENIGMA_revivePlayer";
+} else {		
+systemChat Format ["RIP %1! They are too far gone!",_targetname];
+		};
 
 		} else {		
 		systemChat Format ["RIP %1! They suffered a fatal injury!",_targetname];
