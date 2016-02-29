@@ -209,7 +209,7 @@ _bambiPlayer setVariable ["ExileOwnerUID", getPlayerUID _requestingPlayer];
 _bambiPlayer setVariable ["ExileIsBambi", false];
 _bambiPlayer setVariable ["ExileXM8IsOnline", false, true];
 
-diag_log format ["Bambiplayer = %1 --- _sessionID = %2",_bambiPlayer,_sessionID];
+//diag_log format ["Bambiplayer = %1 --- _sessionID = %2",_bambiPlayer,_sessionID];
 
 
 private["_player","_playerID","_playerPos","_data","_extDB2Message"];

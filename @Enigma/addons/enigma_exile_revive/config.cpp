@@ -1,7 +1,7 @@
 
 class CfgPatches 
 {
-	class enigma_exile_custom {
+	class enigma_exile_revive {
 		units[] = {};
 		weapons[] = {};
 		requiredVersion = 0.1;
@@ -14,7 +14,7 @@ class CfgFunctions
 	{
 		class main 
 		{
-			file = "\enigma_exile_custom\init";
+			file = "\enigma_exile_revive\init";
 			class init
 			{
 				preInit = 1;

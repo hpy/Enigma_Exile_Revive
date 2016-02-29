@@ -35,9 +35,9 @@ changelog
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-First add the startup paramaters @Enigma_Exile to your server!
+First add the startup paramaters @Enigma to your server!
 
-Copy the @Enigma_Exile Folder to your Server Root!
+Copy the @Enigma Folder to your Server Root!
 
 
 
