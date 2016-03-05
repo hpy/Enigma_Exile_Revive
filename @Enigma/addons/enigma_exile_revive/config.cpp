@@ -10,7 +10,7 @@ class CfgPatches
 };
 class CfgFunctions 
 {
-	class EnigmaTeam 
+	class EnigmaRevive
 	{
 		class main 
 		{
