@@ -18,30 +18,35 @@ if (ExileClientIsHandcuffed) then
 }
 else 
 {
-	if (ExileClientIsInConstructionMode) then
+	if (ExileClientActionDelayShown) then 
 	{
-		_cancelEvent = true;	
+		_cancelEvent = true;
 	}
 	else 
-	{	
-		if ((locked _container) isEqualTo 2) then
+	{
+		if (ExileClientIsInConstructionMode) then
 		{
-			_cancelEvent = true;
+			_cancelEvent = true;	
 		}
-		else
-		{
-			if ((_container getVariable ["ExileIsLocked", 1] isEqualTo -1) || (_container getVariable["antidupe", 1]) isEqualTo -1) then  //added revive dupe test -- happdayz
+		else 
+		{	
+			if ((locked _container) isEqualTo 2) then
 			{
-			//hint "antidupe initiated";
 				_cancelEvent = true;
 			}
-			else 
+			else
 			{
-				ExileClientInventoryOpened = true;
-				ExileClientCurrentInventoryContainer = _container;
+				if ((_container getVariable ["ExileIsLocked", 1] isEqualTo -1) || (_container getVariable["antidupe", 1]) isEqualTo -1) then //added revive dupe test -- happdayz
+				{
+					_cancelEvent = true;
+				}
+				else 
+				{
+					ExileClientInventoryOpened = true;
+					ExileClientCurrentInventoryContainer = _container;
+				};
 			};
 		};
 	};
 };
 _cancelEvent // OKAY!
-

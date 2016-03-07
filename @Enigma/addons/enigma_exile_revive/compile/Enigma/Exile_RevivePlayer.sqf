@@ -201,12 +201,14 @@ _bambiPlayer setVariable ["ExileDeaths", (_accountData select 3)];
 
 _bambiPlayer setVariable ["ExileClanID", _clanID];
 _bambiPlayer setVariable ["ExileClanName", _clanName];
-_bambiPlayer setVariable ["ExileHunger", 50];//set to 50% as shouldnt be expect to be full fit and healthy after a defib!
-_bambiPlayer setVariable ["ExileThirst", 50];//set to 50% as shouldnt be expect to be full fit and healthy after a defib!
-_bambiPlayer setVariable ["ExileAlcohol", 0.1]; //testing making player a little "drunk" after the defib ;)
-_bambiPlayer setVariable ["ExileName", _name];
-_bambiPlayer setVariable ["ExileOwnerUID", getPlayerUID _requestingPlayer];
-_bambiPlayer setVariable ["ExileIsBambi", false];
+_bambiPlayer setVariable ["ExileHunger", 50]; //ur hungry
+_bambiPlayer setVariable ["ExileThirst", 50]; //ur thirsty
+_bambiPlayer setVariable ["ExileTemperature", 36]; //ur cold and clammy from death!
+_bambiPlayer setVariable ["ExileWetness", 0];
+_bambiPlayer setVariable ["ExileAlcohol", 0.1]; //ur a little woozy 
+_bambiPlayer setVariable ["ExileName", _name]; 
+_bambiPlayer setVariable ["ExileOwnerUID", getPlayerUID _requestingPlayer]; 
+_bambiPlayer setVariable ["ExileIsBambi", true];
 _bambiPlayer setVariable ["ExileXM8IsOnline", false, true];
 
 //diag_log format ["Bambiplayer = %1 --- _sessionID = %2",_bambiPlayer,_sessionID];
@@ -257,6 +259,8 @@ _data =
 	(getItemCargo vestContainer _player) call ExileClient_util_cargo_getMap,
 	(vestContainer _player) call ExileClient_util_cargo_getMagazineMap,
 	(getWeaponCargo vestContainer _player) call ExileClient_util_cargo_getMap,
+	_player getVariable ["ExileTemperature", 0],
+	_player getVariable ["ExileWetness", 0],
 	_playerID
 ];
 _extDB2Message = ["updatePlayer", _data] call ExileServer_util_extDB2_createMessage;
@@ -304,13 +308,15 @@ format["setAccountHumanity:%1:%2", _newScore, getPlayerUID _requestingPlayer] ca
 		(netId _player),
 		str (_player getVariable ["ExileMoney", 0]),
 		str (_player getVariable ["ExileScore", 0]),
-		str (_player getVariable ["ExileHumanity", 0]),
+		str (_player getVariable ["ExileHumanity", 0]),		
 		(_player getVariable ["ExileKills", 0]),
 		(_player getVariable ["ExileDeaths", 0]),
 		(_player getVariable ["ExileHunger", 100]),
 		(_player getVariable ["ExileThirst", 100]),
 		(_player getVariable ["ExileAlcohol", 0]),
-		(_player getVariable ["ExileClanName", ""])
+		(_player getVariable ["ExileClanName", ""]),
+		(_player getVariable ["ExileTemperature", 0]),
+		(_player getVariable ["ExileWetness", 0])
 	]
 ]
 call ExileServer_system_network_send_to;
@@ -337,7 +343,9 @@ format["setAccountScore:%1:%2", _newScore, getPlayerUID _requestingPlayer] call 
 		(_player getVariable ["ExileHunger", 100]),
 		(_player getVariable ["ExileThirst", 100]),
 		(_player getVariable ["ExileAlcohol", 0]),
-		(_player getVariable ["ExileClanName", ""])
+		(_player getVariable ["ExileClanName", ""]),
+		(_player getVariable ["ExileTemperature", 0]),
+		(_player getVariable ["ExileWetness", 0])
 	]
 ]
 call ExileServer_system_network_send_to;
@@ -348,7 +356,7 @@ call ExileServer_system_network_send_to;
 
 _player addMPEventHandler ["MPKilled", {_this call ExileServer_object_player_event_onMpKilled}];
 
-_requestingPlayer setposatl [0,0,0];
+
 
 
 _corpseGroup = createGroup independent; //test to prevent dead body still being in players group under certain circumstances
