@@ -9,26 +9,7 @@ changelog
 15/01/16 -- hotfix to enable access to corpse inventory after a failed revive.
 17/01/16 -- updated animations for revive, place defib on ground as part of revive process.
 02/02/16 -- added support for GR8 Humanity Script, hopefully fixed any God mode issues against AI.
-
-
-------------------------------------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------HOW TO UPGRADE TO ENIGMA EXILE REVIVE V0.65--------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------------------------------------
-
-- Replace server pbo. Replace Enigma Revive folder in mission file. New Line for cfgcustomcode:
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////				
-		
-		class CfgExileCustomCode {
-		
-		ExileClient_object_player_death_startBleedingOut = "custom\EnigmaRevive\ExileClient_object_player_death_startBleedingOut.sqf"; //Happys Revive
-		ExileClient_object_player_event_onInventoryOpened = "custom\EnigmaRevive\ExileClient_object_player_event_onInventoryOpened.sqf"; //Happys Revive AntiDupe ---NEW with v0.65
-		};	
-			
-//////////////////////////////////////////////////////////////////////////////////////////////////////		
-
-
-
+03/03/16 -- updated to support Exile 0.9.6
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------HOW TO INSTALL ENIGMA EXILE REVIVE V0.65---------------------------------------------------------
@@ -41,7 +22,8 @@ Copy the @Enigma Folder to your Server Root!
 
 
 
-Open up your mission file and add the init.sqf line to your init.sqf file (Must be executed by both server and client!)!
+Open up your mission file and if you have an existing init.sqf then merge the execVM line into your init.sqf file (Must be executed by both server and client!)!
+Otherwise simply copy the init.sqf into your mission file!
 
 Copy the Entire Custom folder into the root of your mission file!
 
@@ -127,7 +109,7 @@ and modify it to read:
 					
 					
 			
-Next you will either want to enable the Defibrilator to be purchased at the trader or add it to loot! I did both but just show how to add to trader here.
+Next you will either want to enable the Defibrilator to be purchased at the trader!
 
 
 Go to:
@@ -142,7 +124,8 @@ Go to:
 		{
 			"Exile_Item_InstaDoc",
 			"Exile_Item_Bandage",
-			"Exile_Item_Vishpirin"
+			"Exile_Item_Vishpirin",
+			"Exile_Item_Heatpack"
 
 			// Not available in 0.9.4!
 			//"Exile_Item_Defibrillator"
@@ -165,8 +148,7 @@ change it to:
 			"Exile_Item_InstaDoc",
 			"Exile_Item_Bandage",
 			"Exile_Item_Vishpirin",
-
-			// Used in Enigma Revive!
+			"Exile_Item_Heatpack",
 			"Exile_Item_Defibrillator"
 		};
 	};
@@ -178,12 +160,14 @@ change it to:
 
 
 
-
-
-
 	Next:
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////				
+
+	class Exile_Item_InstaDoc                       { quality = 1; price = 1250; };
+	class Exile_Item_Vishpirin						{ quality = 1; price = 300; };
+	class Exile_Item_Bandage	                    { quality = 1; price = 100; };
+	class Exile_Item_Heatpack	                    { quality = 1; price = 50; };
 
 	//class Exile_Item_Defibrillator				{ quality = 1; price = 7500; };
 
@@ -193,19 +177,23 @@ change it to:
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////				
 	
+	class Exile_Item_InstaDoc                       { quality = 1; price = 1250; };
+	class Exile_Item_Vishpirin						{ quality = 1; price = 300; };
+	class Exile_Item_Bandage	                    { quality = 1; price = 100; };
+	class Exile_Item_Heatpack	                    { quality = 1; price = 50; };
+
 	class Exile_Item_Defibrillator				{ quality = 1; price = 7500; };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////				
 
 
 
-Players will only get the scroll option to defib the dead player whilst they are bleeding out, and if they are holding a defib! It will show up with the identify body scroll option!
+Players will only get the scroll option to defib the dead player whilst the target player is bleeding out, and if they (the player) are holding a defib! 
+It will show up with the identify body scroll option as "Perform CPR".
 
 
 
 There are a few settings you can modify inside the custom\EnigmaRevive\init.sqf
-
-
 
 
 
