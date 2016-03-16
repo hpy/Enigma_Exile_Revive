@@ -357,7 +357,7 @@ call ExileServer_system_network_send_to;
 _player addMPEventHandler ["MPKilled", {_this call ExileServer_object_player_event_onMpKilled}];
 
 
-
+_requestingPlayer setposatl [0,0,0]; //reports of body duping still
 
 _corpseGroup = createGroup independent; //test to prevent dead body still being in players group under certain circumstances
 [_requestingPlayer] joinSilent _corpseGroup;
