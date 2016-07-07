@@ -70,6 +70,7 @@ else
 	ExileClientBleedOutHeartbeatPlaying = false; 
 	ExileClientBleedOutCountDownDuration = _respawnDelay;
 	ExileClientBleedOutCountDownEnd = time + _respawnDelay;
+	player setVariable ["BleedoutCountDownEnd", ExileClientBleedOutCountDownEnd, true];
 	_layer = "BIS_fnc_respawnCounter" call bis_fnc_rscLayer;
 	_layer cutText ["", "plain"];
 	missionnamespace setvariable ["RscRespawnCounter_description", format ["<t size='2' align='center'>%1</t>",selectRandom _descriptions]];

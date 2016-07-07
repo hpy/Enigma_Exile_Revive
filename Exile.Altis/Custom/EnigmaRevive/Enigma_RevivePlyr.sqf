@@ -4,7 +4,7 @@ Enigma_RevivePlyr.sqf
 © 2016 Enigma Team
 */
 
-private ["_targetname", "_bodypos1", "_bodypos2", "_bodypos3", "_healPlace", "_action", "_bodypos", "_animstate", "_primaryw", "_timer", "_Anims", "_defibpos", "_defibangle", "_posh", "_posi", "_dy", "_dx", "_dir", "_position", "_lootHolder", "_targetsbleedoutcountdown", "_secondsRemaining"];
+private ["_target","_targetname", "_bodypos1", "_bodypos2", "_bodypos3", "_healPlace", "_action", "_bodypos", "_animstate", "_primaryw", "_timer", "_Anims", "_defibpos", "_defibangle", "_posh", "_posi", "_dy", "_dx", "_dir", "_position", "_lootHolder", "_targetsbleedoutcountdown", "_secondsRemaining"];
 
 _target = _this select 0;
 _targetname = name _target;
