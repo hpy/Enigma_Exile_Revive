@@ -22,84 +22,97 @@ _defibangle = 30;
 
 if !(isPlayer _target) exitWith {systemChat Format ["Theres no pulse..."]};
 
-if (_target getVariable "EnigmaRevivePermitted") then {
+if (_target getVariable "EnigmaRevivePermitted") then 
+{
 
-	if (magazines player find "Exile_Item_Defibrillator" >= 0) then {
+	if (magazines player find "Exile_Item_Defibrillator" >= 0) then 
+	{
 
 
-	if ((player distance (_target modelToWorld _bodypos2))<((_target modelToWorld _bodypos1) distance player)) then { 
-		_healPlace = "_bodypos2"; 
-		_action = "medicStart"; 
-		_bodypos = _bodypos2;	
-		_defibpos = [0,0.9,0];
-		_defibangle = 180;
-	}; 
+		if ((player distance (_target modelToWorld _bodypos2))<((_target modelToWorld _bodypos1) distance player)) then 
+		{ 
+			_healPlace = "_bodypos2"; 
+			_action = "medicStart"; 
+			_bodypos = _bodypos2;	
+			_defibpos = [0,0.9,0];
+			_defibangle = 180;
+		}; 
 	 
 		player attachTo [_target, _bodypos]; 
 
-	_posh = player modelToWorld [0,0,0]; 
-	_posi = _target modelToWorld _bodypos3; 
-	_dy 	= (_posh select 1) - (_posi select 1); 
-	_dx 	= (_posh select 0) - (_posi select 0); 
-	_dir = getDir player; 
-	player setDir (270 - (_dy atan2 _dx) - direction _target);	
+		_posh = player modelToWorld [0,0,0]; 
+		_posi = _target modelToWorld _bodypos3; 
+		_dy 	= (_posh select 1) - (_posi select 1); 
+		_dx 	= (_posh select 0) - (_posi select 0); 
+		_dir = getDir player; 
+		player setDir (270 - (_dy atan2 _dx) - direction _target);	
 
-	sleep 0.001; 
+		sleep 0.001; 
+
+		player removeMagazine "Exile_Item_Defibrillator";
+		_position = _target modelToWorld _defibpos;
+		_lootHolder = createVehicle ["LootWeaponHolder", _position, [], 0, "CAN_COLLIDE"];
+		_lootHolder setPosATL _position;
+		_lootHolder addItemCargoGlobal ["Exile_Item_Defibrillator",1];
+		_lootHolder setDir ((getDir _target) + _defibangle); 
 
 
-	player removeMagazine "Exile_Item_Defibrillator";
-	_position = _target modelToWorld _defibpos;
-	_lootHolder = createVehicle ["LootWeaponHolder", _position, [], 0, "CAN_COLLIDE"];
-	_lootHolder setPosATL _position;
-	_lootHolder addItemCargoGlobal ["Exile_Item_Defibrillator",1];
-	_lootHolder setDir ((getDir _target) + _defibangle); 
+		if (_primaryw == "") then 
+		{ 
 
-
-	if (_primaryw == "") then { 
-
-	_target switchMove "AinjPpneMstpSnonWrflDnon";
-	sleep 0.2;
-	player playMove "AinvPknlMstpSlayWrflDnon_medic";
+		_target switchMove "AinjPpneMstpSnonWrflDnon";
+		sleep 0.2;
+		player playMove "AinvPknlMstpSlayWrflDnon_medic";
 	
-	} else {
-
-	if (currentWeapon player != _primaryw) then {
-		player selectWeapon _primaryw;
-		sleep 2;
-	};
+		} 
+		else 
+		{
+			if (currentWeapon player != _primaryw) then 
+			{
+				player selectWeapon _primaryw;
+				sleep 2;
+			};
+		
 			player playActionNow _action;
 			_timer = 15;
 			waitUntil { animationState player in _Anims };
-};
+		};
 
 		sleep _timer;
 		detach player;
 
-if (_primaryw == "") then { 
-		player switchmove ""; 
-	} else {
-		player switchAction "medicStart"; 
-		player playActionNow "medicStop";
-};
-
-		if (_target getVariable["REVIVE", true]) then { 
-
-_targetsbleedoutcountdown = _target getVariable "BleedoutCountDownEnd";
-
-_secondsRemaining = _targetsbleedoutcountdown - time; 
-if (_secondsRemaining >= 17) then
-{
-		_target setVariable["antidupe", -1, true]; 
-       ENIGMA_revivePlayer = [_target,player,1];
-       publicVariableServer "ENIGMA_revivePlayer";
-} else {		
-systemChat Format ["RIP %1! They are too far gone!",_targetname];
+		if (_primaryw == "") then 
+		{ 
+			player switchmove ""; 
+		} 
+		else 
+		{
+			player switchAction "medicStart"; 
+			player playActionNow "medicStop";
 		};
 
-		} else {		
-		systemChat Format ["RIP %1! They suffered a fatal injury!",_targetname];
+		if (_target getVariable["REVIVE", true]) then 
+		{ 
+			_targetsbleedoutcountdown = _target getVariable "BleedoutCountDownEnd";
+			_secondsRemaining = _targetsbleedoutcountdown - time; 
+			if (_secondsRemaining >= 17) then
+			{
+				_target setVariable["antidupe", -1, true]; 
+   				ENIGMA_revivePlayer = [_target,player,1];
+   		    	publicVariableServer "ENIGMA_revivePlayer";
+			} 
+			else 
+			{		
+				systemChat Format ["RIP %1! They are too far gone!",_targetname];
+			};
+		} 
+		else 
+		{		
+			systemChat Format ["RIP %1! They suffered a fatal injury!",_targetname];
 		};
 	}; 
-} else {		
-		systemChat Format ["RIP %1! They suffered a fatal injury!",_targetname];
-		};
+}
+else
+{		
+	systemChat Format ["RIP %1! They suffered a fatal injury!",_targetname];
+};
