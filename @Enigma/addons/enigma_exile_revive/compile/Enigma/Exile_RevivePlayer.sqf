@@ -291,6 +291,7 @@ _extDB2Message call ExileServer_system_database_query_fireAndForget;
  	if (_reviveused > MaxRevivesAllowed) then 
  	{
  		_bambiPlayer setVariable ["REVIVE", false, true];
+ 		_player setVariable ["REVIVE", false, true]; 		
  	};
 
 	_msg = format ["%1 has been stabilised! You have been rewarded 100 Respect!",_name];
@@ -337,7 +338,22 @@ call ExileServer_system_network_send_to;
 	_ownerID publicVariableClient "EnigmaRevive";
 
 	_player allowDamage true;	
-				
+
 		};
 	};
 };
+
+//test to see if this stops duping
+
+
+	[] spawn 
+	{
+		uiSleep 4;
+ 		if !(isPlayer _player) then 
+		{ 
+			diag_log "EnigmaRevive - Something went horribly wrong!"; 	
+			[_player] joinSilent ExileServerGraveyardGroup;
+			deleteVehicle _player;
+		};
+	};
+
