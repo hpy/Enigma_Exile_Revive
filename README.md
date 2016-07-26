@@ -16,6 +16,17 @@ changelog
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+ATTENTION!!!!
+
+IF YOU USE DMS MISSION SYSTEM DO THE FOLLOWING!!!!
+
+In DMS config.sqf ensure that the following is set:
+
+DMS_ai_offload_Only_DMS_AI   = true;
+The AI that was being spawned are being taken over by DMS and this will NOT WORK IF YOU HAVE IT SET TO FALSE!!!!! (which it is by default!)
+
+
+
 First add the startup paramaters @Enigma to your server!
 
 Copy the @Enigma Folder to your Server Root!
