@@ -348,6 +348,7 @@ call ExileServer_system_network_send_to;
 
 	[] spawn 
 	{
+	Private ["_player"];
 		uiSleep 4;
  		if !(isPlayer _player) then 
 		{ 
