@@ -348,9 +348,8 @@ call ExileServer_system_network_send_to;
 
 	[] spawn 
 	{
-	Private ["_player"];
 		uiSleep 4;
- 		if !(isPlayer _player) then 
+ 		if (isNull _player) then 
 		{ 
 			diag_log "EnigmaRevive - Something went horribly wrong!"; 	
 			[_player] joinSilent ExileServerGraveyardGroup;
