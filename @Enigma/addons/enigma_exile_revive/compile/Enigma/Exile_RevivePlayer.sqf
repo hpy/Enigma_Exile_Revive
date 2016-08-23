@@ -334,7 +334,7 @@ call ExileServer_system_network_send_to;
 	[_requestingPlayer] joinSilent ExileServerGraveyardGroup;
 	deleteVehicle _requestingPlayer;
 
-  	EnigmaRevive = [];
+  	EnigmaRevive = [_player];
 	_ownerID publicVariableClient "EnigmaRevive";
 
 	_player allowDamage true;	
