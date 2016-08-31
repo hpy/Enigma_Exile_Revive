@@ -22,10 +22,10 @@ if (isNull _requestingPlayer) exitWith{ diag_log "EnigmaRevive - No requesting p
 
 if (_requestingPlayer distance _reviver > 5) exitWith{ diag_log "EnigmaRevive - Too far from target"};
 
-if (!local _requestingPlayer) then 
+if (!local _requestingPlayer) then
 {
 	_requestingPlayerUID = getPlayerUID _requestingPlayer;
-	if (!isNil "_requestingPlayerUID" && !alive _requestingPlayer) then 
+	if (!isNil "_requestingPlayerUID" && !alive _requestingPlayer) then
 	{
 			if (_requestingPlayer == _reviver) exitWith {
 				Diag_log format ["Enigma Revive - Attempted hack revive by %1",_requestingPlayer];
@@ -40,7 +40,7 @@ if (!local _requestingPlayer) then
     			};
 				} forEach ReviveChk_cache;
 
-					if (isNil "_reviveused") then {_reviveused = 0;}; 
+					if (isNil "_reviveused") then {_reviveused = 0;};
 
 	if (_reviveused == MaxRevivesAllowed) exitWith{
   	EnigmaReviveFail = [_requestingPlayer, _revivername];
@@ -57,13 +57,13 @@ if (!local _requestingPlayer) then
 
 	_msg = format ["%1 You killed %2!",_randommsg,_name];
 
-	EnigmaReviveMSG = [_msg]; 
+	EnigmaReviveMSG = [_msg];
 	_reviverownerID publicVariableClient "EnigmaReviveMSG";
 
 };
 
 
-		if (_requestingPlayer getVariable["REVIVE", true]) then 
+		if (_requestingPlayer getVariable["REVIVE", true]) then
 		{
 
 			_location = getPosATL _requestingPlayer;
@@ -77,7 +77,7 @@ if (!local _requestingPlayer) then
 			_items = assignedItems _requestingPlayer;
 			_magazinesAmmo = magazinesAmmo _requestingPlayer;
 
-			_handgunammo = _requestingPlayer ammo handgunWeapon _requestingPlayer; 
+			_handgunammo = _requestingPlayer ammo handgunWeapon _requestingPlayer;
 			_handguntype = handgunWeapon _requestingPlayer;
 			_primaryWeapon = "";
 			_secondaryWeapon = "";
@@ -86,10 +86,10 @@ if (!local _requestingPlayer) then
 			_weaponsplayer = [getWeaponCargo(uniformContainer _requestingPlayer), getWeaponCargo(vestContainer _requestingPlayer), getWeaponCargo(backpackContainer _requestingPlayer)];
 			_weapons = [currentWeapon _requestingPlayer, (weaponsItems _requestingPlayer), [_primaryWeapon, _secondaryWeapon, handgunWeapon _requestingPlayer]];
 			hideObjectGlobal _requestingPlayer;
-			
+
 
 			_accountData = format["getAccountStats:%1", _requestingPlayerUID] call ExileServer_system_database_query_selectSingle;
-			_group = call ExileServer_system_group_getOrCreateLoneWolfGroup;
+			_group = createGroup independent;
 
 			_bambiPlayer = _group createUnit["Exile_Unit_Player", _location, [], 0, "CAN_COLLIDE"];
 			removeHeadgear _bambiPlayer;
@@ -120,7 +120,7 @@ if (!local _requestingPlayer) then
 				_bambiPlayer setFatigue FatiguewhenRevived;
 				_bambiPlayer setDamage DamageWhenRevived;
 				_bambiPlayer setPosATL _location;
-				_bambiPlayer setDir _dir;				
+				_bambiPlayer setDir _dir;
 
 				if (_uniform != "") then {_bambiPlayer addUniform _uniform;};
 				if (_backpack != "") then {_bambiPlayer addBackpack _backpack;};
@@ -193,7 +193,7 @@ if (!local _requestingPlayer) then
 				}forEach _weaponsplayer;
 				{_bambiPlayer addMagazine _x;}forEach _magazinesAmmo;
 
-_bambiPlayer addMagazine [_handguntype, _handgunammo]; 
+_bambiPlayer addMagazine [_handguntype, _handgunammo];
 
 _bambiPlayer setPosATL [_location select 0,_location select 1,0];
 _bambiPlayer disableAI "FSM";
@@ -203,7 +203,7 @@ _bambiPlayer disableAI "TARGET";
 _bambiPlayer disableAI "CHECKVISIBLE";
 _bambiPlayer setDir _dir;
 _bambiPlayer setName _name;
-_bambiPlayer setVariable ["ExileMoney", 0, true]; 
+_bambiPlayer setVariable ["ExileMoney", 0, true];
 _bambiPlayer setVariable ["ExileScore", (_accountData select 0)];
 _bambiPlayer setVariable ["ExileKills", (_accountData select 1)];
 _bambiPlayer setVariable ["ExileDeaths", (_accountData select 2)];
@@ -213,9 +213,9 @@ _bambiPlayer setVariable ["ExileHunger", 50];
 _bambiPlayer setVariable ["ExileThirst", 50];
 _bambiPlayer setVariable ["ExileTemperature", 36];
 _bambiPlayer setVariable ["ExileWetness", 0];
-_bambiPlayer setVariable ["ExileAlcohol", 0]; 
-_bambiPlayer setVariable ["ExileName", _name]; 
-_bambiPlayer setVariable ["ExileOwnerUID", getPlayerUID _requestingPlayer]; 
+_bambiPlayer setVariable ["ExileAlcohol", 0];
+_bambiPlayer setVariable ["ExileName", _name];
+_bambiPlayer setVariable ["ExileOwnerUID", getPlayerUID _requestingPlayer];
 _bambiPlayer setVariable ["ExileIsBambi", true];
 _bambiPlayer setVariable ["ExileXM8IsOnline", false, true];
 _bambiPlayer setVariable ["ExileLocker", (_accountData select 4), true];
@@ -287,18 +287,18 @@ _extDB2Message call ExileServer_system_database_query_fireAndForget;
 																} forEach ReviveChk_cache;
 
 											_reviveused = _reviveused + 1;
- 												ReviveChk_cache set [_ind, [_playerID, _reviveused]]; 
- 	if (_reviveused > MaxRevivesAllowed) then 
+ 												ReviveChk_cache set [_ind, [_playerID, _reviveused]];
+ 	if (_reviveused > MaxRevivesAllowed) then
  	{
  		_bambiPlayer setVariable ["REVIVE", false, true];
- 		_player setVariable ["REVIVE", false, true]; 		
+ 		_player setVariable ["REVIVE", false, true];
  	};
 
 	_msg = format ["%1 has been stabilised! You have been rewarded 100 Respect!",_name];
 
-	EnigmaReviveMSG = [_msg]; 
+	EnigmaReviveMSG = [_msg];
 	_reviverownerID publicVariableClient "EnigmaReviveMSG";
-								
+
 
 _newScore = _requestingPlayer getVariable ["ExileScore", 0];
 _newScore = _newScore + 100;
@@ -307,13 +307,13 @@ format["setAccountScore:%1:%2", _newScore, getPlayerUID _requestingPlayer] call 
 
 
 _player addMPEventHandler ["MPKilled", {_this call ExileServer_object_player_event_onMpKilled}];
-if (getNumber (configFile >> "CfgSettings" >> "VehicleSpawn" >> "thermalVision") isEqualTo 0) then 
+if (getNumber (configFile >> "CfgSettings" >> "VehicleSpawn" >> "thermalVision") isEqualTo 0) then
 {
 	_player addEventHandler ["WeaponAssembled", {(_this select 1) disableTIEquipment true;}];
 };
 [
-	_sessionID, 
-	"loadPlayerResponse", 
+	_sessionID,
+	"loadPlayerResponse",
 	[
 		(netId _player),
 		str (_player getVariable ["ExileScore", 0]),
@@ -326,18 +326,18 @@ if (getNumber (configFile >> "CfgSettings" >> "VehicleSpawn" >> "thermalVision")
 		(_player getVariable ["ExileTemperature", 0]),
 		(_player getVariable ["ExileWetness", 0])
 	]
-] 
+]
 call ExileServer_system_network_send_to;
 [_sessionID, _player] call ExileServer_system_session_update;
 
-				
+
 	[_requestingPlayer] joinSilent ExileServerGraveyardGroup;
 	deleteVehicle _requestingPlayer;
 
   	EnigmaRevive = [_player];
 	_ownerID publicVariableClient "EnigmaRevive";
 
-	_player allowDamage true;	
+	_player allowDamage true;
 
 		};
 	};
@@ -346,12 +346,12 @@ call ExileServer_system_network_send_to;
 //test to see if this stops duping
 
 
-	[] spawn 
+	[] spawn
 	{
 		uiSleep 4;
- 		if (isNull _player) then 
-		{ 
-			diag_log "EnigmaRevive - Something went horribly wrong!"; 	
+ 		if (isNull _player) then
+		{
+			diag_log "EnigmaRevive - Something went horribly wrong!";
 			[_player] joinSilent ExileServerGraveyardGroup;
 			deleteVehicle _player;
 		};
