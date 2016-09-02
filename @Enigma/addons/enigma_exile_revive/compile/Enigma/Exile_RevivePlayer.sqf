@@ -89,9 +89,7 @@ if (!local _requestingPlayer) then
 			
 
 			_accountData = format["getAccountStats:%1", _requestingPlayerUID] call ExileServer_system_database_query_selectSingle;
-			_group = call ExileServer_system_group_getOrCreateLoneWolfGroup;
-
-			_bambiPlayer = _group createUnit["Exile_Unit_Player", _location, [], 0, "CAN_COLLIDE"];
+			_bambiPlayer = (createGroup independent) createUnit ["Exile_Unit_Player", [0,0,0], [], 0, "CAN_COLLIDE"];
 			removeHeadgear _bambiPlayer;
 			_bambiPlayer allowDammage false;
 			_clanID = (_accountData select 3);
@@ -343,17 +341,4 @@ call ExileServer_system_network_send_to;
 	};
 };
 
-//test to see if this stops duping
-
-
-	[] spawn 
-	{
-		uiSleep 4;
- 		if (isNull _player) then 
-		{ 
-			diag_log "EnigmaRevive - Something went horribly wrong!"; 	
-			[_player] joinSilent ExileServerGraveyardGroup;
-			deleteVehicle _player;
-		};
-	};
 

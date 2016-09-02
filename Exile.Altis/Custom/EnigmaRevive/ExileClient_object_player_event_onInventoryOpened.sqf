@@ -8,45 +8,56 @@
  * This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. 
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
  */
- 
-private["_cancelEvent","_container"];
+
 _cancelEvent = false;
 _container = _this select 1;
-if (ExileClientIsHandcuffed) then 
+
+try 
 {
-	_cancelEvent = true;
-}
-else 
-{
+	if (ExileIsPlayingRussianRoulette) then 
+	{
+		throw true;
+	};
+
+	if (ExileClientIsHandcuffed) then 
+	{
+		throw true;
+	};
+
 	if (ExileClientActionDelayShown) then 
 	{
-		_cancelEvent = true;
-	}
-	else 
-	{
-		if (ExileClientIsInConstructionMode) then
-		{
-			_cancelEvent = true;	
-		}
-		else 
-		{	
-			if ((locked _container) isEqualTo 2) then
-			{
-				_cancelEvent = true;
-			}
-			else
-			{
-				if ((_container getVariable ["ExileIsLocked", 1] isEqualTo -1) || (_container getVariable["antidupe", 1]) isEqualTo -1) then //added revive dupe test -- happdayz
-				{
-					_cancelEvent = true;
-				}
-				else 
-				{
-					ExileClientInventoryOpened = true;
-					ExileClientCurrentInventoryContainer = _container;
-				};
-			};
-		};
+		throw true;
 	};
+
+	// Dont double-place walls while in construction mode
+	if (ExileClientIsInConstructionMode) then 
+	{
+		throw true;
+	};
+
+	// Cannot access locked vehicles
+	if ((locked _container) isEqualTo 2) then
+	{
+		throw true;
+	};
+
+	// Cannot access locked containers
+	if (_container getVariable ["ExileIsLocked", 1] isEqualTo -1) then 
+	{
+		throw true;
+	};
+	// Cannot access in progress revive player inventories
+	if ((_container getVariable["antidupe", 1]) isEqualTo -1) then 
+	{
+		throw true;
+	};
+
+	ExileClientInventoryOpened = true;
+	ExileClientCurrentInventoryContainer = _container;
+}
+catch 
+{
+	_cancelEvent = _exception;
 };
-_cancelEvent // OKAY!
+
+_cancelEvent

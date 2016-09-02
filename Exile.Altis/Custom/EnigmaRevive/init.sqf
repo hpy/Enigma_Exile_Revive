@@ -64,11 +64,13 @@ player setVariable["antidupe", 1, true];
 //////////////////////////////////////////////////////////////////////////////////////EventHandlers//////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 "EnigmaRevive" addPublicVariableEventHandler {
-	private["_newPlayerObject","_oldPlayerObject","_packet","_weapon","_reviver"];
-	 _packet = _this select 1;
-	_newPlayerObject = _packet select 0;
-	if (alive _newPlayerObject) then
-	{	
+private["_newPlayerObject","_oldPlayerObject","_packet","_weapon","_reviver"];
+_packet = _this select 1;
+_newPlayerObject = _packet select 0;
+if (alive _newPlayerObject) then
+{	
+	if (isPlayer _newPlayerObject) then
+	{
 		cutText ["","BLACK IN",20];
 		[100] call BIS_fnc_bloodEffect;
 		"Reviving player..." call ExileClient_util_log;
@@ -85,14 +87,20 @@ player setVariable["antidupe", 1, true];
 		ExileClientPlayerIsBambi = false;
 		false call ExileClient_gui_hud_toggleBambiIcon;	
 		player setVariable["antidupe", 1, true]; //remove the antidupe from the revived player!
+		
 	}
 	else
 	{
 		call ExileClient_object_player_death_forceRespawn;
 	};
+}
+else
+{
+	call ExileClient_object_player_death_forceRespawn;
 };
 
-"EnigmaReviveFail" addPublicVariableEventHandler {
+"EnigmaReviveFail" addPublicVariableEventHandler 
+{
    	_packet = _this select 1;
   	_requestingPlayer = _packet select 0;
 	_revivername = _packet select 1;
@@ -101,7 +109,8 @@ player setVariable["antidupe", 1, true];
 	call ExileClient_object_player_death_forceRespawn; //force kill player
 };
 
-"EnigmaReviveMSG" addPublicVariableEventHandler {
+"EnigmaReviveMSG" addPublicVariableEventHandler 
+{
    _packet = _this select 1;
    _msg = _packet select 0;
   	systemChat Format ["%1",_msg];
