@@ -8,7 +8,8 @@ Enigma Exile Revive Initialization
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////Custom Settings//////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if (!hasInterface && isServer) exitWith {
+if (!hasInterface && isServer) exitWith
+{
 
 
 GR8HumanityInstalled = false; //If you are running GR8's Humanity script set this to true!
@@ -20,7 +21,7 @@ DamageWhenRevived = 0.95; //Set to a percentage. 0.95 = 95% damage.... or 5% hea
 FatiguewhenRevived = 1; //Set to a percentage. 1 = 100% fatigued and can only walk.
 
 
-//NOTE: this has been designed to only allow 1 revive. I havent put in any checks to prevent players using this to gain respect by killing each other and reviving again!!! 
+//NOTE: this has been designed to only allow 1 revive. I havent put in any checks to prevent players using this to gain respect by killing each other and reviving again!!!
 //You have been warned!
 
 
@@ -59,7 +60,7 @@ Diag_log "Initializing Enigma Revive!";
 if (hasInterface) then {
 [] execVM "Custom\EnigmaRevive\compiles.sqf";
 player setVariable ['EnigmaRevivePermitted', false, true];
-player setVariable["antidupe", 1, true]; 
+player setVariable["antidupe", 1, true];
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////EventHandlers//////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,8 +68,8 @@ player setVariable["antidupe", 1, true];
 private["_newPlayerObject","_oldPlayerObject","_packet","_weapon","_reviver"];
 _packet = _this select 1;
 _newPlayerObject = _packet select 0;
-if (alive _newPlayerObject) then
-{	
+	if (alive _newPlayerObject) then
+	{
 	if (isPlayer _newPlayerObject) then
 	{
 		cutText ["","BLACK IN",20];
@@ -85,9 +86,9 @@ if (alive _newPlayerObject) then
 		["endBambiStateRequest"] call ExileClient_system_network_send;	//remove bambi status (changed in some previous version to clientside control)
 		[ExileClientEndBambiStateThread] call ExileClient_system_thread_removeTask;
 		ExileClientPlayerIsBambi = false;
-		false call ExileClient_gui_hud_toggleBambiIcon;	
+		false call ExileClient_gui_hud_toggleBambiIcon;
 		player setVariable["antidupe", 1, true]; //remove the antidupe from the revived player!
-		
+
 	}
 	else
 	{
@@ -98,8 +99,8 @@ else
 {
 	call ExileClient_object_player_death_forceRespawn;
 };
-
-"EnigmaReviveFail" addPublicVariableEventHandler 
+};
+"EnigmaReviveFail" addPublicVariableEventHandler
 {
    	_packet = _this select 1;
   	_requestingPlayer = _packet select 0;
@@ -109,7 +110,7 @@ else
 	call ExileClient_object_player_death_forceRespawn; //force kill player
 };
 
-"EnigmaReviveMSG" addPublicVariableEventHandler 
+"EnigmaReviveMSG" addPublicVariableEventHandler
 {
    _packet = _this select 1;
    _msg = _packet select 0;
@@ -119,5 +120,3 @@ else
 	sleep 10;
 	systemChat "Loading: Enigma Exile Revive"; //Please leave this line as a way of saying thanks to me! :D HAPPYD
 };
-
-
