@@ -64,13 +64,16 @@ player setVariable["antidupe", 1, true];
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////EventHandlers//////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-"EnigmaRevive" addPublicVariableEventHandler {
-private["_newPlayerObject","_oldPlayerObject","_packet","_weapon","_reviver"];
-_packet = _this select 1;
-_newPlayerObject = _packet select 0;
-_oldPlayerObject = _packet select 1;
-
-	deleteVehicle _oldPlayerObject; //because the server doesnt seem to be doing its job
+"EnigmaRevive" addPublicVariableEventHandler 
+{
+	private["_newPlayerObject","_oldPlayerObject","_packet","_weapon","_reviver"];
+	_packet = _this select 1;
+	_newPlayerObject = _packet select 0;
+	_oldPlayerObject = _packet select 1;
+	if !(isNil "_oldPlayerObject") then
+	{
+		deleteVehicle _oldPlayerObject; //because the server doesnt seem to be doing its job
+	};
 	if (alive _newPlayerObject) then
 	{
 	if (isPlayer _newPlayerObject) then

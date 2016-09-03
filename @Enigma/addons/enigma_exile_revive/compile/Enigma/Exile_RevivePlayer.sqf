@@ -329,7 +329,6 @@ call ExileServer_system_network_send_to;
 [_sessionID, _player] call ExileServer_system_session_update;
 
 
-	[_requestingPlayer] joinSilent ExileServerGraveyardGroup;
 	deleteVehicle _requestingPlayer;
 
   	EnigmaRevive = [_player,_requestingPlayer];
