@@ -3,7 +3,7 @@ private["_respawnDelay","_layer","_descriptions"];
 _respawnDelay = _this;
 oldgroup = group player;
 
-if (player getVariable["REVIVE", true]) then 
+if (player getVariable["REVIVE", true]) then
 {
 
 	_descriptions =
@@ -14,11 +14,11 @@ if (player getVariable["REVIVE", true]) then
 	"ON DEATHS DOOR"
 	];
 
-	player setVariable ['EnigmaRevivePermitted', true, true]; 
-} 
-else 
+	player setVariable ['EnigmaRevivePermitted', true, true];
+}
+else
 {
-	_descriptions = 
+	_descriptions =
 	[
 		"WRECKED",
 		"REKT",
@@ -26,7 +26,7 @@ else
 		"WASTED",
 		"SCREWED",
 		"TOASTED",
-		"REST IN PIECES", 
+		"REST IN PIECES",
 		"TERMINATED",
 		"KILLED",
 		"EXILED",
@@ -50,15 +50,15 @@ else
 // SPLASH
 [100] call BIS_fnc_bloodEffect;
 
-// Fade to gray instantly                               
+// Fade to gray instantly
 //ExileClientPostProcessingColorCorrections ppEffectAdjust [1, 1.1, -0.05, [0.4, 0.2, 0.3, -0.1], [0.79, 0.72, 0.62, 0], [0.5,0.5,0.5,0], [0,0,0,0,0,0,4]];
-ExileClientPostProcessingColorCorrections ppEffectAdjust [1, 1, 0, [0, 0, 0, 0], [0.39, 0.32, 0.25, 0], [0.5,0.5,0.5,0], [0,0,0,0,0,0,4]]; 
+ExileClientPostProcessingColorCorrections ppEffectAdjust [1, 1, 0, [0, 0, 0, 0], [0.39, 0.32, 0.25, 0], [0.5,0.5,0.5,0], [0,0,0,0,0,0,4]];
 ExileClientPostProcessingColorCorrections ppEffectCommit 0;
 
-// Fade to red slowy                                     
+// Fade to red slowy
 //ExileClientPostProcessingColorCorrections ppEffectAdjust [1, 1.1, -0.05, [0.4, 0.2, 0.3, -0.1], [0.3, 0.05, 0, 0], [0.5,0.5,0.5,0], [0,0,0,0,0,0,4]];
 ExileClientPostProcessingColorCorrections ppEffectAdjust [1, 1, 0, [0.4, 0.2, 0.3, 0], [0.3, 0.05, 0, 0], [0.5,0.5,0.5,0], [0,0,0,0,0,0,4]];
-ExileClientPostProcessingColorCorrections ppEffectCommit _respawnDelay; 
+ExileClientPostProcessingColorCorrections ppEffectCommit _respawnDelay;
 
 // Enable blur
 ExileClientPostProcessingBackgroundBlur ppEffectAdjust [0];
@@ -68,10 +68,10 @@ ExileClientPostProcessingBackgroundBlur ppEffectAdjust [2];
 ExileClientPostProcessingBackgroundBlur ppEffectCommit _respawnDelay;
 
 // Our count down
-ExileClientBleedOutHeartbeatPlaying = false; 
+ExileClientBleedOutHeartbeatPlaying = false;
 ExileClientBleedOutCountDownDuration = _respawnDelay;
 ExileClientBleedOutCountDownEnd = time + _respawnDelay;
-
+player setVariable ["BleedoutCountDownEnd", ExileClientBleedOutCountDownEnd, true];
 // BIS count down GUI
 _layer = "BIS_fnc_respawnCounter" call bis_fnc_rscLayer;
 _layer cutText ["", "plain"];
