@@ -329,10 +329,11 @@ call ExileServer_system_network_send_to;
 [_sessionID, _player] call ExileServer_system_session_update;
 
 
-	deleteVehicle _requestingPlayer;
-
   	EnigmaRevive = [_player,_requestingPlayer];
 	_ownerID publicVariableClient "EnigmaRevive";
+
+	_requestingPlayer setposATL [0,0,0];
+	deleteVehicle _requestingPlayer;
 
 	_player allowDamage true;
 
