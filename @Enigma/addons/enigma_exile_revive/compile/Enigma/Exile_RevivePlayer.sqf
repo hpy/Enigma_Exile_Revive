@@ -303,6 +303,12 @@ _newScore = _newScore + 100;
 _requestingPlayer setVariable ["ExileScore", _newScore];
 format["setAccountScore:%1:%2", _newScore, getPlayerUID _requestingPlayer] call ExileServer_system_database_query_fireAndForget;
 
+	_requestingPlayer setposATL [0,0,0];
+	deleteVehicle _requestingPlayer;
+
+
+diag_log format ["WHAT ON EARTH ARE YOU DOING HERE??? %1",_requestingPlayer];
+
 
 _player addMPEventHandler ["MPKilled", {_this call ExileServer_object_player_event_onMpKilled}];
 if (getNumber (configFile >> "CfgSettings" >> "VehicleSpawn" >> "thermalVision") isEqualTo 0) then
@@ -332,8 +338,7 @@ call ExileServer_system_network_send_to;
   	EnigmaRevive = [_player,_requestingPlayer];
 	_ownerID publicVariableClient "EnigmaRevive";
 
-	_requestingPlayer setposATL [0,0,0];
-	deleteVehicle _requestingPlayer;
+
 
 	_player allowDamage true;
 
