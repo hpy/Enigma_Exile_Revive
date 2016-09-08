@@ -97,10 +97,10 @@ if (!local _requestingPlayer) then
 			_weaponsplayer = [getWeaponCargo(uniformContainer _requestingPlayer), getWeaponCargo(vestContainer _requestingPlayer), getWeaponCargo(backpackContainer _requestingPlayer)];
 			_weapons = [currentWeapon _requestingPlayer, (weaponsItems _requestingPlayer), [_primaryWeapon, _secondaryWeapon, handgunWeapon _requestingPlayer]];
 			hideObjectGlobal _requestingPlayer;
-			//[_requestingPlayer] joinSilent ExileServerGraveyardGroup;
-			//deleteVehicle _requestingPlayer;
+			[_requestingPlayer] joinSilent ExileServerGraveyardGroup;
+
 			_money =  _requestingPlayer getVariable ["ExileMoney", 0];
-			//diag_log format ["Body money is %1" , _money];
+			// Remove all items from dead body
 			_clear = {
 				_this = _object;
 				removeAllActions _object;
@@ -114,13 +114,11 @@ if (!local _requestingPlayer) then
 				removeAllContainers _object;
 			};
 			_requestingPlayer call _clear;
-
+			// If player has poptabs, drop poptab bag
 			if (_money > 0) then {
 				_moneyHolder = createVehicle ["Exile_PopTabs",_location,[], 0, "can_collide"];
 				_moneyHolder setVariable ["ExileMoney", _money, true];
 			};
-
-
 
 			_accountData = format["getAccountStats:%1", _requestingPlayerUID] call ExileServer_system_database_query_selectSingle;
 			_group = createGroup independent;
@@ -367,18 +365,6 @@ if (!local _requestingPlayer) then
 			call ExileServer_system_network_send_to;
 			[_sessionID, _player] call ExileServer_system_session_update;
 
-			//_requestingPlayer call ExileServer_system_garbageCollector_deleteObject;
-			/*_requestingPlayer spawn
-			{
-				_requestingPlayer = _this;
-				//uiSleep 2;
-		 		if !(isNull _requestingPlayer) then
-				{
-					diag_log "EnigmaRevive - Delete Body Now!";
-					deleteVehicle _requestingPlayer;
-				};
-			};*/
-
 			EnigmaRevive = [_player];
 			_ownerID publicVariableClient "EnigmaRevive";
 
@@ -387,18 +373,4 @@ if (!local _requestingPlayer) then
 		};
 	};
 };
-
-//test to see if this stops duping
-/*
-
-	[] spawn
-	{
-		uiSleep 4;
- 		if (isNull _bambiPlayer) then
-		{
-			diag_log "EnigmaRevive - Something went horribly wrong!";
-			[_bambiPlayer] joinSilent ExileServerGraveyardGroup;
-			deleteVehicle _bambiPlayer;
-		};
-	};*/
 
