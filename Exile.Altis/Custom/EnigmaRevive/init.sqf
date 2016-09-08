@@ -13,14 +13,14 @@ if (!hasInterface && isServer) exitWith {
 
 GR8HumanityInstalled = false; //If you are running GR8's Humanity script set this to true!
 
-MaxRevivesAllowed = 1; //Set the max number of revives permitted per life. I recomend you keep it at 1. Just saying...
+MaxRevivesAllowed = 3; //Set the max number of revives permitted per life. I recomend you keep it at 1. Just saying...
 
-DamageWhenRevived = 0.95; //Set to a percentage. 0.95 = 95% damage.... or 5% health
+DamageWhenRevived = 0.35; //Set to a percentage. 0.95 = 95% damage.... or 5% health
 
-FatiguewhenRevived = 1; //Set to a percentage. 1 = 100% fatigued and can only walk.
+FatiguewhenRevived = 0; //Set to a percentage. 1 = 100% fatigued and can only walk.
 
 
-//NOTE: this has been designed to only allow 1 revive. I havent put in any checks to prevent players using this to gain respect by killing each other and reviving again!!! 
+//NOTE: this has been designed to only allow 1 revive. I havent put in any checks to prevent players using this to gain respect by killing each other and reviving again!!!
 //You have been warned!
 
 
@@ -59,7 +59,7 @@ Diag_log "Initializing Enigma Revive!";
 if (hasInterface) then {
 [] execVM "Custom\EnigmaRevive\compiles.sqf";
 player setVariable ['EnigmaRevivePermitted', false, true];
-player setVariable["antidupe", 1, true]; 
+player setVariable["antidupe", 1, true];
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////EventHandlers//////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,29 +67,22 @@ player setVariable["antidupe", 1, true];
 	private["_newPlayerObject","_oldPlayerObject","_packet","_weapon","_reviver"];
 	 _packet = _this select 1;
 	_newPlayerObject = _packet select 0;
-	if (alive _newPlayerObject) then
-	{	
-		cutText ["","BLACK IN",20];
-		[100] call BIS_fnc_bloodEffect;
-		"Reviving player..." call ExileClient_util_log;
-		_layer = "BIS_fnc_respawnCounter" call bis_fnc_rscLayer;
-		_layer cutText ["", "plain"];
-		"Removing bleed out thread..." call ExileClient_util_log;
-		[ExileClientBleedOutThread] call ExileClient_system_thread_removeTask;
- 		ExileClientBleedOutThread = -1;
-		player setVariable ['EnigmaRevivePermitted', false, true];
-		false call ExileClient_gui_postProcessing_toggleDialogBackgroundBlur;
-		true call ExileClient_gui_hud_toggle;
-		["endBambiStateRequest"] call ExileClient_system_network_send;	//remove bambi status (changed in some previous version to clientside control)
-		[ExileClientEndBambiStateThread] call ExileClient_system_thread_removeTask;
-		ExileClientPlayerIsBambi = false;
-		false call ExileClient_gui_hud_toggleBambiIcon;	
-		player setVariable["antidupe", 1, true]; //remove the antidupe from the revived player!
-	}
-	else
-	{
-		call ExileClient_object_player_death_forceRespawn;
-	};
+	cutText ["","BLACK IN",20];
+	[100] call BIS_fnc_bloodEffect;
+	"Reviving player..." call ExileClient_util_log;
+	_layer = "BIS_fnc_respawnCounter" call bis_fnc_rscLayer;
+	_layer cutText ["", "plain"];
+	"Removing bleed out thread..." call ExileClient_util_log;
+	[ExileClientBleedOutThread] call ExileClient_system_thread_removeTask;
+ 	ExileClientBleedOutThread = -1;
+	player setVariable ['EnigmaRevivePermitted', false, true];
+	false call ExileClient_gui_postProcessing_toggleDialogBackgroundBlur;
+	true call ExileClient_gui_hud_toggle;
+	["endBambiStateRequest"] call ExileClient_system_network_send;	//remove bambi status (changed in some previous version to clientside control)
+	[ExileClientEndBambiStateThread] call ExileClient_system_thread_removeTask;
+	ExileClientPlayerIsBambi = false;
+	false call ExileClient_gui_hud_toggleBambiIcon;
+	player setVariable["antidupe", 1, true]; //remove the antidupe from the revived player!
 };
 
 "EnigmaReviveFail" addPublicVariableEventHandler {
@@ -97,8 +90,8 @@ player setVariable["antidupe", 1, true];
   	_requestingPlayer = _packet select 0;
 	_revivername = _packet select 1;
   	systemChat Format ["%1 bungled your revive and killed you!",_revivername];
-  	player setVariable["antidupe", 1, true]; //remove the antidupe from the revived player!
-	call ExileClient_object_player_death_forceRespawn; //force kill player
+  		player setVariable["antidupe", 1, true]; //remove the antidupe from the revived player!
+	[] call ExileClient_gui_escape_respawn; //force kill player
 };
 
 "EnigmaReviveMSG" addPublicVariableEventHandler {
@@ -110,5 +103,3 @@ player setVariable["antidupe", 1, true];
 	sleep 10;
 	systemChat "Loading: Enigma Exile Revive"; //Please leave this line as a way of saying thanks to me! :D HAPPYD
 };
-
-
