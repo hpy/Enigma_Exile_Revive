@@ -2,17 +2,8 @@
 Exile Revive System
 
 
-changelog
-
-13/01/16 -- prevent duping of gear by revived player.
-14/01/16 -- prevent accessing gear on player being revived (stops duping).
-15/01/16 -- hotfix to enable access to corpse inventory after a failed revive.
-17/01/16 -- updated animations for revive, place defib on ground as part of revive process.
-02/02/16 -- added support for GR8 Humanity Script, hopefully fixed any God mode issues against AI.
-03/03/16 -- updated to support Exile 0.9.6
-
 ------------------------------------------------------------------------------------------------------------------------------------------------------
------------------------------------------------------HOW TO INSTALL ENIGMA EXILE REVIVE V0.65---------------------------------------------------------
+-----------------------------------------------------HOW TO INSTALL ENIGMA EXILE REVIVE V0.80---------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -24,7 +15,6 @@ In DMS config.sqf ensure that the following is set:
 
 DMS_ai_offload_Only_DMS_AI   = true;
 The AI that was being spawned are being taken over by DMS and this will NOT WORK IF YOU HAVE IT SET TO FALSE!!!!! (which it is by default!)
-
 
 
 First add the startup paramaters @Enigma to your server!

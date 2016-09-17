@@ -100,8 +100,10 @@ if (!local _requestingPlayer) then
 			[_requestingPlayer] joinSilent ExileServerGraveyardGroup;
 
 			_money =  _requestingPlayer getVariable ["ExileMoney", 0];
+
 			// Remove all items from dead body
-			_clear = {
+			_clear = 
+			{
 				_this = _object;
 				removeAllActions _object;
 				removeAllAssignedItems  _object;
@@ -119,6 +121,12 @@ if (!local _requestingPlayer) then
 				_moneyHolder = createVehicle ["Exile_PopTabs",_location,[], 0, "can_collide"];
 				_moneyHolder setVariable ["ExileMoney", _money, true];
 			};
+
+			//remove money from the dead body
+			_requestingPlayer setVariable ["ExileMoney", 0];
+
+			//move deadplayer far far away!
+			_requestingPlayer setpos [0,0,0];
 
 			_accountData = format["getAccountStats:%1", _requestingPlayerUID] call ExileServer_system_database_query_selectSingle;
 			_group = createGroup independent;
