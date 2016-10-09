@@ -102,9 +102,9 @@ if (!local _requestingPlayer) then
 			_money =  _requestingPlayer getVariable ["ExileMoney", 0];
 
 			// Remove all items from dead body
-			_clear = 
+			_clear =
 			{
-				_this = _object;
+				_object = _this;
 				removeAllActions _object;
 				removeAllAssignedItems  _object;
 				removeHeadgear _object;
