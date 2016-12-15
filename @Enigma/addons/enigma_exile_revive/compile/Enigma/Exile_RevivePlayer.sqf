@@ -14,7 +14,7 @@ private["_handguntype","_handgunammo","_player","_playerID","_playerPos",
 	"_itemqtys", "_goggles", "_headgear", "_vest", "_backpack", "_uniform",
 	"_weapons", "_magazinesAmmo", "_itemsplayer", "_weaponsplayer", "_group",
 	"_primaryWeapon", "_secondaryWeapon", "_attachment", "_equipped", "_wMags",
-	"_requestingPlayerGroup", "_droppedWeapons", "_bambiPlayer", "_ownerID", "_reviver","_playerUID"];
+	"_requestingPlayerGroup", "_droppedWeapons", "_bambiPlayer", "_ownerID", "_reviver","_playerUID","_locationTABS"];
 
 _bambiPlayer = objNull;
 _requestingPlayer = _this select 0;
@@ -76,8 +76,8 @@ if (!local _requestingPlayer) then
 
 		if (_requestingPlayer getVariable["REVIVE", true]) then
 		{
-
-			_location = getPosATL _requestingPlayer;
+			_location = _requestingPlayer modelToWorldVisual [0,0,0.2];
+			_locationTABS = _requestingPlayer modelToWorldVisual [0,0,0];
 			_dir = getDir _requestingPlayer;
 			_requestingPlayerGroup = _requestingPlayer getVariable["GROUP", ""];
 			_goggles = goggles _requestingPlayer;
@@ -118,7 +118,7 @@ if (!local _requestingPlayer) then
 			_requestingPlayer call _clear;
 			// If player has poptabs, drop poptab bag
 			if (_money > 0) then {
-				_moneyHolder = createVehicle ["Exile_PopTabs",_location,[], 0, "can_collide"];
+				_moneyHolder = createVehicle ["Exile_PopTabs",_locationTABS,[], 0, "CAN_COLLIDE"];
 				_moneyHolder setVariable ["ExileMoney", _money, true];
 			};
 
