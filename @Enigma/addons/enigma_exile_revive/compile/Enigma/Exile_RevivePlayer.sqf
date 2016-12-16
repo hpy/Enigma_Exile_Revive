@@ -238,7 +238,7 @@ if (!local _requestingPlayer) then
 
 			_bambiPlayer addMagazine [_handguntype, _handgunammo];
 
-			_bambiPlayer setPosATL [_location select 0,_location select 1,0];
+			//_bambiPlayer setPosATL [_location select 0,_location select 1,0];// remove this line as it sets to ground level
 			_bambiPlayer disableAI "FSM";
 			_bambiPlayer disableAI "MOVE";
 			_bambiPlayer disableAI "AUTOTARGET";
