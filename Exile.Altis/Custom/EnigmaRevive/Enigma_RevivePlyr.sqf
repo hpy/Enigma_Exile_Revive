@@ -4,7 +4,7 @@ Enigma_RevivePlyr.sqf
 © 2016 Enigma Team
 */
 
-private ["_target","_targetname", "_bodypos1", "_bodypos2", "_bodypos3", "_healPlace", "_action", "_bodypos", "_animstate", "_primaryw", "_timer", "_Anims", "_defibpos", "_defibangle", "_posh", "_posi", "_dy", "_dx", "_dir", "_position", "_lootHolder", "_targetsbleedoutcountdown", "_secondsRemaining"];
+private ["_target","_targetname", "_bodypos1", "_bodypos2", "_bodypos3", "_healPlace", "_action", "_bodypos", "_animstate", "_primaryw", "_timer", "_Anims", "_defibpos", "_defibangle", "_posh", "_posi", "_dy", "_dx", "_dir", "_position", "_lootHolder", "_targetsbleedoutcountdown", "_secondsRemaining", "_playersNearby", "_exit"];
 
 _target = _this select 0;
 _targetname = name _target;
@@ -22,7 +22,17 @@ _defibpos = [0.4,0.9,0];
 _defibangle = 30;
 
 if !(isPlayer _target) exitWith {systemChat Format ["Theres no pulse..."]};
-
+//Prevent reviving if another player is close by, this prevents it bugging the player out
+_playersNearby = [player, 10] call ExileClient_util_world_getAlivePlayerInfantryInRange;
+{
+	if !(_x isEqualTo player) then
+	{
+		["ErrorTitleOnly", ["Another player is too close"]] call ExileClient_gui_toaster_addTemplateToast;
+		_exit = true;
+	};
+}
+forEach _playersNearby;
+if(_exit isEqualTo true)exitWith{};
 if (_target getVariable "EnigmaRevivePermitted") then 
 {
 
